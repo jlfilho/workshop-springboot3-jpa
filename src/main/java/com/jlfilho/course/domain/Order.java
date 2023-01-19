@@ -3,7 +3,8 @@ package com.jlfilho.course.domain;
 import java.time.Instant;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,9 +21,11 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy", timezone = "GMT")
 	private Instant moment;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private User client;
