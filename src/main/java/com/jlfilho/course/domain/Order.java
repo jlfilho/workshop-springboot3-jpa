@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
+import com.jlfilho.course.domain.enums.OrderStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,29 +15,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tb_order")
+@Table(name = "tb_order")
 public class Order {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@JsonFormat(pattern="dd/MM/yyyy", timezone = "GMT")
+
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT")
 	private Instant moment;
-	
-	
+
+	private Integer orderStatus;
+
 	@ManyToOne
-	@JoinColumn(name="client_id")
+	@JoinColumn(name = "client_id")
 	private User client;
 
 	public Order() {
 		super();
 	}
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -65,6 +67,15 @@ public class Order {
 		this.client = client;
 	}
 
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.toEnum(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null)
+		this.orderStatus = orderStatus.getId();
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -81,9 +92,5 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
 
 }
