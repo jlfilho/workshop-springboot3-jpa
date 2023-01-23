@@ -1,9 +1,10 @@
 package com.jlfilho.course.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,7 +34,7 @@ public class Product implements Serializable {
 	joinColumns = @JoinColumn(name="product_id"), 
 	inverseJoinColumns = @JoinColumn(name = "category_id")
 	)
-	private List<Category> categories = new ArrayList<>();
+	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {
 		super();
@@ -89,7 +90,7 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public List<Category> getCategories() {
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
