@@ -16,8 +16,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="tb_product")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -29,9 +31,9 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	@JsonIgnore
+	
 	@ManyToMany
-	@JoinTable(name = "PRODUCT_CATEGORY", 
+	@JoinTable(name = "TB_PRODUCT_CATEGORY", 
 	joinColumns = @JoinColumn(name="product_id"), 
 	inverseJoinColumns = @JoinColumn(name = "category_id")
 	)
